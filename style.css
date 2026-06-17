@@ -449,7 +449,10 @@ footer {
         font-size: 2rem;
     }
 
+    /* Updated mobile nav so links stay visible and wrap cleanly */
     .nav-links {
-        display: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
     }
 }
