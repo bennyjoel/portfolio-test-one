@@ -11,26 +11,39 @@
             // 1. Custom Cursor Logic
             const cursor = document.querySelector('.custom-cursor');
             
-            if (window.innerWidth > 768) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                });
+            const initCursor = () => {
+                if (window.matchMedia("(pointer: fine)").matches) {
+                    cursor.style.display = 'block';
+                    document.addEventListener('mousemove', (e) => {
+                        cursor.style.left = e.clientX + 'px';
+                        cursor.style.top = e.clientY + 'px';
+                    });
 
-                const interactives = document.querySelectorAll('a, .gallery-img, .btn-download, video, iframe');
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-                });
-            }
+                    const interactives = document.querySelectorAll('a, .gallery-img, .btn-download, video, iframe');
+                    interactives.forEach(el => {
+                        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+                        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+                    });
+                } else {
+                    cursor.style.display = 'none';
+                }
+            };
+            initCursor();
 
             // 2. Parallax Scroll Effect for Hero Section
+            let ticking = false;
             window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const heroHeading = document.querySelector('.main-heading');
-                if (heroHeading && window.innerWidth > 768) {
-                    heroHeading.style.transform = `translateY(${scrolled * 0.35}px)`;
-                    heroHeading.style.opacity = 1 - (scrolled * 0.0025);
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrolled = window.pageYOffset;
+                        const heroHeading = document.querySelector('.main-heading');
+                        if (heroHeading && window.innerWidth > 768) {
+                            heroHeading.style.transform = `translateY(${scrolled * 0.35}px)`;
+                            heroHeading.style.opacity = 1 - (scrolled * 0.0025);
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
             });
 
@@ -136,9 +149,9 @@
 
             <div class="pdf-container fade-in">
                 <h3>Full Resume</h3>
-                <iframe src="https://drive.google.com/file/d/1jzI_TW1QAPLwSJEElCwgJBY0XTrcB922/preview" width="100%" height="600px" style="border: 1px solid rgba(255, 255, 255, 0.2);"></iframe>
+                <iframe src="files/CV Resume (1).pdf" width="100%" height="600px" style="border: 1px solid rgba(255, 255, 255, 0.2); max-height: 80vh;"></iframe>
                 <br>
-                <a href="https://drive.google.com/file/d/1jzI_TW1QAPLwSJEElCwgJBY0XTrcB922/view?usp=sharing" target="_blank" class="btn-download">View / Download PDF</a>
+                <a href="files/CV Resume (1).pdf" target="_blank" class="btn-download">View / Download PDF</a>
             </div>
         </div>
     </section>
@@ -154,19 +167,19 @@
             </div>
 
             <div class="gallery-grid">
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_1_ID_HERE" alt="On set monitor view" class="gallery-img fade-in">
+                <img src="files/1 (1).jpeg" alt="On set monitor view" class="gallery-img fade-in" loading="lazy">
                 
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_2_ID_HERE" alt="Behind the scenes with cast" class="gallery-img fade-in">
+                <img src="files/1 (2).jpeg" alt="Behind the scenes with cast" class="gallery-img fade-in" loading="lazy">
                 
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_3_ID_HERE" alt="Monitor frame setup" class="gallery-img fade-in">
+                <img src="files/1 (3).jpeg" alt="Monitor frame setup" class="gallery-img fade-in" loading="lazy">
                 
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_4_ID_HERE" alt="Cast and crew on location" class="gallery-img fade-in">
+                <img src="files/1 (4).jpeg" alt="Cast and crew on location" class="gallery-img fade-in" loading="lazy">
                 
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_5_ID_HERE" alt="Green screen stunt coordination" class="gallery-img fade-in">
+                <img src="files/1 (5).jpeg" alt="Green screen stunt coordination" class="gallery-img fade-in" loading="lazy">
                 
-                <img src="https://drive.google.com/uc?export=view&id=PASTE_PHOTO_6_ID_HERE" alt="On set portrait" class="gallery-img fade-in">
+                <img src="files/1 (6).jpeg" alt="On set portrait" class="gallery-img fade-in" loading="lazy">
                 
-                <iframe src="https://drive.google.com/file/d/PASTE_VIDEO_ID_HERE/preview" class="gallery-video fade-in" allow="autoplay" allowfullscreen></iframe>
+                <video src="files/1 (1).mp4" class="gallery-video fade-in" autoplay loop muted playsinline style="width: 100%; object-fit: cover;"></video>
             </div>
         </div>
     </section>
