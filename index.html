@@ -4,182 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benny Joel Lakamana | Assistant Director</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 1. Custom Cursor Logic
-            const cursor = document.querySelector('.custom-cursor');
-            
-            const initCursor = () => {
-                if (window.matchMedia("(pointer: fine)").matches) {
-                    cursor.style.display = 'block';
-                    document.addEventListener('mousemove', (e) => {
-                        cursor.style.left = e.clientX + 'px';
-                        cursor.style.top = e.clientY + 'px';
-                    });
-
-                    const interactives = document.querySelectorAll('a, .gallery-img, .btn-download, video, iframe');
-                    interactives.forEach(el => {
-                        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-                        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-                    });
-                } else {
-                    cursor.style.display = 'none';
-                }
-            };
-            initCursor();
-
-            // 2. Parallax Scroll Effect for Hero Section
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const scrolled = window.pageYOffset;
-                        const heroHeading = document.querySelector('.main-heading');
-                        if (heroHeading && window.innerWidth > 768) {
-                            heroHeading.style.transform = `translateY(${scrolled * 0.35}px)`;
-                            heroHeading.style.opacity = 1 - (scrolled * 0.0025);
-                        }
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-
-            // 3. Intersection Observer for Scroll Fade-Ins
-            const faders = document.querySelectorAll('.fade-in');
-            const appearOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
-
-            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    } else {
-                        entry.target.classList.add('visible');
-                        appearOnScroll.unobserve(entry.target);
-                    }
-                });
-            }, appearOptions);
-
-            faders.forEach(fader => {
-                appearOnScroll.observe(fader);
-            });
-        });
-    </script>
+    <meta name="description" content="Portfolio of Benny Joel Lakamana — Assistant Director in the Indian film industry.">
+    <link rel="stylesheet" href="style-dark-a-alt.css">
 </head>
 <body>
 
-    <div class="custom-cursor"></div>
+    <!-- 3D Cinematic Particle Background -->
+    <canvas id="webgl-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.8;"></canvas>
 
-    <nav>
-        <div class="nav-container container">
-            <ul class="nav-links">
-                <li><a href="#about">ABOUT ME</a></li>
-                <li><a href="#cv">CV</a></li>
-                <li><a href="#works">WORKS</a></li>
-            </ul>
-        </div>
+    <div class="custom-cursor" id="cursor"></div>
+
+    <nav class="nav-container-floating">
+        <ul class="nav-links">
+            <li><a href="#hero">ABOUT</a></li>
+            <li><a href="#cv">CV</a></li>
+            <li><a href="#works">WORKS</a></li>
+        </ul>
     </nav>
 
-    <section id="about" class="section hero black-bg">
-        <div class="container hero-container fade-in">
-            <div class="main-heading">
-                <h1 class="hero-name">BENNY JOEL LAKAMANA</h1>
-                <h2 class="hero-title">ASSISTANT DIRECTOR</h2>
-                <div class="hero-contact fade-in">
-                    <a href="tel:+919014133656">+91 9014133656</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="mailto:bennyofficial19@gmail.com">bennyofficial19@gmail.com</a>
-                </div>
-            </div>
-            
-            <div class="about-content content-block fade-in">
-                <h2>Professional Summary</h2>
-                <p>Innovative co-director with expertise in creative concept development and risk management. Adept at managing multiple projects simultaneously while ensuring alignment across teams, leading to cohesive and impactful storytelling in film projects.</p>
-            </div>
-
-            <div class="education content-block fade-in">
-                <h2>Education</h2>
-                <ul class="clean-list">
-                    <li><strong>BFA in Animation</strong> – Jawaharlal Nehru Architecture and Fine Arts University (JNAFAU) (2022–2026)</li>
-                    <li><strong>Diploma in Animation & VFX Prime</strong> – Arena Animation (2021–2025)</li>
-                </ul>
+    <!-- Hero — centered, tight, no wasted space -->
+    <section id="hero">
+        <div class="container fade-in">
+            <h1>BENNY JOEL<br>LAKAMANA</h1>
+            <h2 class="role">ASSISTANT DIRECTOR</h2>
+            <div class="contact-bold">
+                <a href="tel:+919014133656">+91 9014133656</a>
+                <span class="sep">|</span>
+                <a href="mailto:bennyofficial19@gmail.com">bennyofficial19@gmail.com</a>
             </div>
         </div>
     </section>
 
-    <section id="cv" class="section black-bg fade-in">
+    <!-- CV Section -->
+    <section id="cv">
         <div class="container">
-            <h2 class="section-title">Curriculum Vitae</h2>
-            
-            <div class="cv-grid">
-                <div class="cv-column fade-in">
-                    <h3>Experience</h3>
-                    <div class="job">
-                        <h4>Co-Director | Csix (Hyderabad, India)</h4>
-                        <ul>
-                            <li>Developed creative concepts and storyboards for short film projects.</li>
-                            <li>Managed multiple tasks simultaneously while adhering to tight deadlines.</li>
-                        </ul>
-                    </div>
-                    <div class="job">
-                        <h4>Assistant VFX Supervisor & VFX Coordinator | Technical Artist VFX (Hyderabad, India)</h4>
-                        <ul>
-                            <li>Supervised team of artists to maintain project deadlines.</li>
-                            <li>Managed workflow using project management software for tracking progress.</li>
-                            <li>Coordinated with other department supervisors to ensure smooth workflow and project alignment.</li>
-                        </ul>
-                    </div>
-                </div>
+            <h2 class="section-heading fade-in">Experience</h2>
 
-                <div class="cv-column fade-in">
-                    <h3>Core Skills</h3>
-                    <ul class="skills-list">
-                        <li>VFX Coordination & Technical Artistry</li>
-                        <li>Storyboarding & Creative concept development</li>
-                        <li>Previsualization directly inside Unreal Engine 5.6</li>
-                        <li>Animation software & Chaos Control</li>
-                        <li>Risk, Project, and Time management</li>
-                        <li>Team collaboration</li>
-                    </ul>
-                </div>
+            <div class="exp-item fade-in">
+                <h3>Co-Director</h3>
+                <h4>Csix — Hyderabad, India</h4>
+                <p>Developed creative concepts and storyboards for short film projects. Managed multiple tasks simultaneously while adhering to tight deadlines.</p>
             </div>
 
-            <div class="pdf-container fade-in">
+            <h2 class="section-heading fade-in" style="margin-top: 60px;">Education</h2>
+
+            <div class="edu-item fade-in">
+                <p>BFA in Animation</p>
+                <span>Jawaharlal Nehru Architecture and Fine Arts University (JNAFAU) — 2022–2026</span>
+            </div>
+            <div class="edu-item fade-in">
+                <p>Animation & VFX Prime</p>
+                <span>Arena Animation — 2021–2025</span>
+            </div>
+
+            <div class="pdf-container fade-in" style="margin-top: 60px;">
                 <h3>Full Resume</h3>
-                <iframe src="files/CV Resume (1).pdf" width="100%" height="600px" style="border: 1px solid rgba(255, 255, 255, 0.2); max-height: 80vh;"></iframe>
-                <br>
+                <iframe src="files/CV Resume (1).pdf" width="100%" height="550px" style="border: none;"></iframe>
                 <a href="files/CV Resume (1).pdf" target="_blank" class="btn-download">View / Download PDF</a>
             </div>
         </div>
     </section>
 
-    <section id="works" class="section gray-bg fade-in">
+    <!-- Works Section -->
+    <section id="works">
         <div class="container">
-            <h2 class="section-title">Commercial Works</h2>
-            
-            <div class="project-header fade-in">
-                <h3>Project: <span class="takshaka-title">TAKSHAKA</span></h3>
-                <p><strong>Production House:</strong> MSR Creations</p>
-                <p><strong>Roles:</strong> Production Coordinator & Assistant VFX Supervisor</p>
-            </div>
+            <h2 class="section-heading fade-in">Works</h2>
 
             <div class="gallery-grid">
-                <img src="files/1 (1).jpeg" alt="On set monitor view" class="gallery-img fade-in" loading="lazy">
-                
-                <img src="files/1 (2).jpeg" alt="Behind the scenes with cast" class="gallery-img fade-in" loading="lazy">
-                
-                <img src="files/1 (3).jpeg" alt="Monitor frame setup" class="gallery-img fade-in" loading="lazy">
-                
-                <img src="files/1 (4).jpeg" alt="Cast and crew on location" class="gallery-img fade-in" loading="lazy">
-                
-                <img src="files/1 (5).jpeg" alt="Green screen stunt coordination" class="gallery-img fade-in" loading="lazy">
-                
-                <img src="files/1 (6).jpeg" alt="On set portrait" class="gallery-img fade-in" loading="lazy">
-                
-                <video src="files/1 (1).mp4" class="gallery-video fade-in" autoplay loop muted playsinline style="width: 100%; object-fit: cover;"></video>
+                <div class="gallery-item fade-in">
+                    <img src="files/1 (1).jpeg" alt="On set monitor view" loading="lazy">
+                </div>
+                <div class="gallery-item fade-in">
+                    <video src="files/1 (1).mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="files/1 (2).jpeg" alt="Behind the scenes" loading="lazy">
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="files/1 (3).jpeg" alt="Monitor frame setup" loading="lazy">
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="files/1 (4).jpeg" alt="Cast and crew" loading="lazy">
+                </div>
+                <div class="gallery-item fade-in">
+                    <img src="files/1 (5).jpeg" alt="Stunt coordination" loading="lazy">
+                </div>
             </div>
         </div>
     </section>
@@ -188,5 +97,35 @@
         <p>&copy; 2026 Benny Joel Lakamana. All Rights Reserved.</p>
     </footer>
 
+    <script>
+        const cursor = document.getElementById('cursor');
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, .gallery-item, .btn-download').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+            });
+        } else {
+            cursor.style.display = 'none';
+        }
+
+        const faders = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        faders.forEach(f => observer.observe(f));
+    </script>
+
+    <!-- Three.js Library & Custom 3D Background Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="3d-bg.js"></script>
 </body>
 </html>
