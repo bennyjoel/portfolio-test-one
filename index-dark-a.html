@@ -9,11 +9,8 @@
 </head>
 <body>
 
-    <!-- 3D Abstract Background -->
-    <div class="canvas-3d">
-        <div class="shape-3d sphere-1"></div>
-        <div class="shape-3d cube-1"></div>
-    </div>
+    <!-- 3D Cinematic Particle Background -->
+    <canvas id="webgl-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.8;"></canvas>
 
     <div class="custom-cursor" id="cursor"></div>
 
@@ -126,5 +123,9 @@
         }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
         faders.forEach(f => observer.observe(f));
     </script>
+
+    <!-- Three.js Library & Custom 3D Background Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="3d-bg.js"></script>
 </body>
 </html>
