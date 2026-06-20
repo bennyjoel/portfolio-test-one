@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600&family=Space+Mono&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #020202;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden; /* No scrolling, pure canvas */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 3D CANVAS ===== */
+#webgl-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+}
+
+/* ===== UI OVERLAY ===== */
+.ui-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 10;
+    pointer-events: none; /* Let mouse interact with canvas */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+}
+
+.ui-element {
+    pointer-events: auto; /* Re-enable clicks on text */
+}
+
+/* Typography */
+a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.4s ease;
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+/* Top Row */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.brand-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.brand-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Center Content */
+.center-title {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    mix-blend-mode: difference;
+}
+
+.center-title h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 200;
+    letter-spacing: 15px;
+    margin-right: -15px; /* Offset for tracking */
+    opacity: 0.9;
+}
+
+/* Bottom Row */
+.footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .ui-layer { padding: 25px; }
+    .header { flex-direction: column; gap: 20px; }
+    .nav-links { gap: 15px; }
+    .center-title h1 { font-size: 2.5rem; letter-spacing: 8px; margin-right: -8px; }
+    .footer-info { flex-direction: column; align-items: flex-start; gap: 10px; }
+}

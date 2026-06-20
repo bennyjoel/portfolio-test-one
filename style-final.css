@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+    --bg: #020202;
+    --fg: #ffffff;
+    --dim: rgba(255, 255, 255, 0.5);
+    --faint: rgba(255, 255, 255, 0.08);
+    --accent: #00d4ff; /* Cool edge from the galaxy */
+    --font-main: 'Outfit', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* ==============================
+   3D CANVAS
+   ============================== */
+#webgl-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none; /* Let clicks pass through to content */
+}
+
+/* ==============================
+   LAYOUT WRAPPER
+   ============================== */
+.content-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.pad {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 6%;
+}
+
+/* ==============================
+   NAVIGATION (GLASS HUD)
+   ============================== */
+nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 100;
+    padding: 30px 0;
+    transition: background 0.4s, backdrop-filter 0.4s;
+}
+
+nav.scrolled {
+    background: rgba(2, 2, 2, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--faint);
+}
+
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--fg);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--dim);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--fg); }
+
+/* ==============================
+   SCROLL ANIMATIONS
+   ============================== */
+.anim {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+.anim.in {
+    opacity: 1;
+    transform: translateY(0);
+}
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+/* ==============================
+   HERO (FULL VIEWPORT)
+   ============================== */
+#hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--dim);
+    margin-bottom: 20px;
+}
+
+.hero-name {
+    font-size: clamp(3rem, 10vw, 7.5rem);
+    font-weight: 200;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.hero-role {
+    font-family: var(--font-mono);
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    margin-bottom: 40px;
+}
+
+.hero-contact {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.hero-contact a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--faint);
+    padding-bottom: 4px;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.hero-contact a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.hero-contact .dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--dim);
+}
+
+/* ==============================
+   SECTION STRUCTURE
+   ============================== */
+section {
+    padding: 100px 0;
+}
+
+.mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.mono-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--faint);
+}
+
+/* ==============================
+   ABOUT
+   ============================== */
+.about-text {
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--dim);
+    max-width: 900px;
+}
+
+.about-text strong {
+    color: var(--fg);
+    font-weight: 400;
+}
+
+/* ==============================
+   EXPERIENCE
+   ============================== */
+.exp-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--faint);
+}
+
+.exp-card:first-of-type { border-top: 1px solid var(--faint); }
+
+.exp-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--dim);
+    padding-top: 8px;
+}
+
+.exp-content h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.exp-content p {
+    font-size: 1.05rem;
+    color: var(--dim);
+    line-height: 1.7;
+    max-width: 650px;
+}
+
+/* ==============================
+   EDUCATION
+   ============================== */
+.edu-card {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--faint);
+}
+
+.edu-card:first-of-type { border-top: 1px solid var(--faint); }
+
+.edu-card h4 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.edu-card span {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--dim);
+}
+
+/* ==============================
+   RESUME PDF (Glassmorphism)
+   ============================== */
+.resume-wrap {
+    margin-top: 80px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--faint);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.resume-wrap h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.resume-wrap iframe {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--faint);
+}
+
+.btn-resume {
+    display: inline-block;
+    margin-top: 25px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--bg);
+    background: var(--fg);
+    text-decoration: none;
+    padding: 14px 30px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-resume:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+/* ==============================
+   WORKS GALLERY
+   ============================== */
+.works-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.work-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: #111;
+    border: 1px solid var(--faint);
+}
+
+.work-card img,
+.work-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: transform 1.2s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.work-card:hover img,
+.work-card:hover video {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* ==============================
+   FOOTER
+   ============================== */
+footer {
+    padding: 60px 0;
+    border-top: 1px solid var(--faint);
+    text-align: center;
+    background: rgba(2, 2, 2, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+footer p {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ==============================
+   MOBILE (Responsive Alignment)
+   ============================== */
+@media (max-width: 768px) {
+    nav { padding: 20px 0; }
+    .brand-name { font-size: 1rem; }
+    .nav-links { gap: 15px; }
+    .nav-links a { font-size: 0.65rem; }
+
+    #hero { text-align: center; }
+    .hero-name { font-size: clamp(3rem, 15vw, 4.5rem); letter-spacing: -1px; }
+    .hero-contact {
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .hero-contact .dot { display: none; }
+
+    section { padding: 60px 0; }
+    .mono-label { margin-bottom: 35px; }
+
+    .exp-card { grid-template-columns: 1fr; gap: 10px; padding: 30px 0; }
+    .works-grid { grid-template-columns: 1fr; gap: 10px; }
+
+    .resume-wrap { padding: 20px; }
+    .resume-wrap iframe { height: 400px; }
+}
+
+@media (max-width: 400px) {
+    .nav-links { display: none; /* Hide on super small, focus on brand */ }
+}
