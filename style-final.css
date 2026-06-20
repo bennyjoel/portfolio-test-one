@@ -165,20 +165,23 @@ body {
 .hero-contact a {
     color: var(--fg);
     text-decoration: none;
-    border-bottom: 1px solid var(--faint);
-    padding-bottom: 4px;
-    transition: border-color 0.3s, color 0.3s;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .hero-contact a:hover {
-    color: var(--accent);
+    background: rgba(0, 212, 255, 0.1);
     border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
 }
 
 .hero-contact .dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--dim);
+    display: none; /* Hidden since links are now pills */
 }
 
 /* ==============================
